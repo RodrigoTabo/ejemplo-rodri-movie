@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Rodrii\\Desktop\\Curso Universitario Maxi Programas\\Curso C# Nivel 4\\05 - Identity\\rodri-movie-mvc-EJEMPLO\\rodri-movie-mvc\\rodri-movie-mvc.csproj": {}
+    "C:\\Users\\Rodrii\\Desktop\\Curso Universitario Maxi Programas\\Curso C# Nivel 4\\06 - Desarrollo app con IA\\rodri-movie-mvc\\rodri-movie-mvc.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Rodrii\\Desktop\\Curso Universitario Maxi Programas\\Curso C# Nivel 4\\05 - Identity\\rodri-movie-mvc-EJEMPLO\\rodri-movie-mvc\\rodri-movie-mvc.csproj": {
+    "C:\\Users\\Rodrii\\Desktop\\Curso Universitario Maxi Programas\\Curso C# Nivel 4\\06 - Desarrollo app con IA\\rodri-movie-mvc\\rodri-movie-mvc.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Rodrii\\Desktop\\Curso Universitario Maxi Programas\\Curso C# Nivel 4\\05 - Identity\\rodri-movie-mvc-EJEMPLO\\rodri-movie-mvc\\rodri-movie-mvc.csproj",
+        "projectUniqueName": "C:\\Users\\Rodrii\\Desktop\\Curso Universitario Maxi Programas\\Curso C# Nivel 4\\06 - Desarrollo app con IA\\rodri-movie-mvc\\rodri-movie-mvc.csproj",
         "projectName": "rodri-movie-mvc",
-        "projectPath": "C:\\Users\\Rodrii\\Desktop\\Curso Universitario Maxi Programas\\Curso C# Nivel 4\\05 - Identity\\rodri-movie-mvc-EJEMPLO\\rodri-movie-mvc\\rodri-movie-mvc.csproj",
+        "projectPath": "C:\\Users\\Rodrii\\Desktop\\Curso Universitario Maxi Programas\\Curso C# Nivel 4\\06 - Desarrollo app con IA\\rodri-movie-mvc\\rodri-movie-mvc.csproj",
         "packagesPath": "C:\\Users\\Rodrii\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Rodrii\\Desktop\\Curso Universitario Maxi Programas\\Curso C# Nivel 4\\05 - Identity\\rodri-movie-mvc-EJEMPLO\\rodri-movie-mvc\\obj\\",
+        "outputPath": "C:\\Users\\Rodrii\\Desktop\\Curso Universitario Maxi Programas\\Curso C# Nivel 4\\06 - Desarrollo app con IA\\rodri-movie-mvc\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
