@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("rodri-movie-mvc")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ecd84c60eba4ecc46e3b65ffa175bdb2ea682c51")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6d1911ed458a4f237bfed8e83f484e311d00560c")]
 [assembly: System.Reflection.AssemblyProductAttribute("rodri-movie-mvc")]
 [assembly: System.Reflection.AssemblyTitleAttribute("rodri-movie-mvc")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
