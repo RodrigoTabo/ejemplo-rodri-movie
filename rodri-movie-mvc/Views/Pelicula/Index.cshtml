@@ -1,0 +1,62 @@
+﻿@model IEnumerable<rodri_movie_mvc.Models.Pelicula>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+            <h1>Index</h1>
+
+            <p>
+                <a class="btn btn-primary" asp-action="Create">Añadir Pelicula</a>
+            </p>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Titulo)
+                        </th>
+                        <th>
+                            Portada
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Plataforma)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Genero)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Titulo)
+                            </td>
+                            <td>
+                                <img src="@item.PosterUrlPortada" height="50" />
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Plataforma.Nombre)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Genero.Descripcion)
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success">Editar</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Detalles</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Eliminar</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
