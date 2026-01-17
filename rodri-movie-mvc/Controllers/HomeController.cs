@@ -16,7 +16,7 @@ namespace rodri_movie_mvc.Controllers
         {
                 _context = context;
         }
-        public async Task<IActionResult> Index(int paginaActual = 1, int pageSize = 8, string txtBusqueda = "") 
+        public async Task<IActionResult> Index(int paginaActual = 1, int pageSize = 8, string txtBusqueda = "", int generoId = 0, int plataformaId = 0) 
         {
             if (paginaActual < 1) paginaActual = 1;
             if (pageSize != 8) pageSize = 8;
@@ -28,8 +28,15 @@ namespace rodri_movie_mvc.Controllers
                 consulta = consulta.Where(p => p.Titulo.Contains(txtBusqueda));
             }
 
+            if (generoId != 0)
+            {
+                consulta = consulta.Where(p => p.GeneroId == generoId);
+            }
 
-
+            if (plataformaId != 0)
+            {
+                consulta = consulta.Where(p => p.PlataformaId == plataformaId);
+            }
 
             var totalItems = await consulta.CountAsync();
             var totalPages = (int)System.Math.Ceiling(totalItems / (double)pageSize);
@@ -47,6 +54,14 @@ namespace rodri_movie_mvc.Controllers
             ViewBag.TotalPages = totalPages;
             ViewBag.TotalItems = totalItems;
             ViewBag.TxtBusqueda = txtBusqueda;
+
+            var generos = await _context.Generos.OrderBy(g => g.Descripcion).ToListAsync();
+            generos.Insert(0, new Genero { Id = 0, Descripcion = "Todos" });
+            ViewBag.GeneroId = new SelectList(generos, "Id", "Descripcion", generoId);
+
+            var plataforma = await _context.Plataformas.OrderBy(p => p.Nombre).ToListAsync();
+            plataforma.Insert(0, new Plataforma { Id = 0, Nombre = "Todos" });
+            ViewBag.PlataformaId = new SelectList(plataforma, "Id", "Nombre", plataformaId);
 
             return View(peliculas);
         }
