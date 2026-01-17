@@ -18,10 +18,12 @@ namespace rodri_movie_mvc.Controllers
         public async Task<IActionResult> Index(int page = 1, int pageSize = 8)
         {
             if (page < 1) page = 1;
-            if (pageSize <= 0) pageSize = 8;
+            if (pageSize != 8) pageSize = 8;
 
             var totalItems = await _context.Peliculas.CountAsync();
             var totalPages = (int)System.Math.Ceiling(totalItems / (double)pageSize);
+
+            if (page > totalPages && totalPages > 0) page = totalPages;
 
             var peliculas = await _context.Peliculas
                 .OrderBy(p => p.Titulo)
@@ -29,16 +31,12 @@ namespace rodri_movie_mvc.Controllers
                 .Take(pageSize)
                 .ToListAsync();
 
-            var vm = new rodri_movie_mvc.Models.HomeIndexViewModel
-            {
-                Peliculas = peliculas,
-                Page = page,
-                PageSize = pageSize,
-                TotalItems = totalItems,
-                TotalPages = totalPages
-            };
+            ViewBag.Page = page;
+            ViewBag.PageSize = pageSize;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.TotalItems = totalItems;
 
-            return View(vm);
+            return View(peliculas);
         }
 
         public IActionResult Privacy()

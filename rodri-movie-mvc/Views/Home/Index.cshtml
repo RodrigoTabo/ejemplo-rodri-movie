@@ -1,4 +1,4 @@
-﻿@model rodri_movie_mvc.Models.HomeIndexViewModel
+﻿@model List<Pelicula>
 
 @{
     ViewData["Title"] = "Home Page";
@@ -71,7 +71,7 @@
 
     <div class="row g-4">
 
-        @foreach (var pelicula in Model.Peliculas)
+        @foreach (var pelicula in Model)
         {
             <!-- Card 1 -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
@@ -96,30 +96,37 @@
                             <span class="badge bg-primary fs-6">4 / 5</span>
                         </div>
                     </div>
-
                 </div>
             </div>
         }
 
     </div>
-    <!-- Pagination -->
-    @if (Model.TotalPages > 1)
-    {
-        <nav aria-label="Paginación" class="mt-4">
-            <ul class="pagination justify-content-center">
-                <li class="page-item @(Model.HasPrevious ? "" : "disabled")">
-                    <a class="page-link" asp-action="Index" asp-controller="Home" asp-route-page="@(Model.Page - 1)" asp-route-pageSize="@Model.PageSize">Anterior</a>
-                </li>
-                @for (var i = 1; i <= Model.TotalPages; i++)
-                {
-                    <li class="page-item @(i == Model.Page ? "active" : "")">
-                        <a class="page-link" asp-action="Index" asp-controller="Home" asp-route-page="@i" asp-route-pageSize="@Model.PageSize">@i</a>
-                    </li>
-                }
-                <li class="page-item @(Model.HasNext ? "" : "disabled")">
-                    <a class="page-link" asp-action="Index" asp-controller="Home" asp-route-page="@(Model.Page + 1)" asp-route-pageSize="@Model.PageSize">Siguiente</a>
-                </li>
-            </ul>
-        </nav>
-    }
+    
 </div>
+
+<!-- Pagination -->
+@{
+    var page = ViewBag.Page as int? ?? 1;
+    var pageSize = ViewBag.PageSize as int? ?? 8;
+    var totalPages = ViewBag.TotalPages as int? ?? 1;
+}
+
+@if (totalPages > 1)
+{
+    <nav aria-label="Paginación" class="mt-4">
+        <ul class="pagination justify-content-center">
+            <li class="page-item @(page <= 1 ? "disabled" : "")">
+                <a class="page-link" href="?page=@(page - 1)&pageSize=@pageSize">Anterior</a>
+            </li>
+
+            @for (int i = 1; i <= totalPages; i++)
+            {
+                <li class="page-item @(i == page ? "active" : "")"><a class="page-link" href="?page=@i&pageSize=@pageSize">@i</a></li>
+            }
+
+            <li class="page-item @(page >= totalPages ? "disabled" : "")">
+                <a class="page-link" href="?page=@(page + 1)&pageSize=@pageSize">Siguiente</a>
+            </li>
+        </ul>
+    </nav>
+}
