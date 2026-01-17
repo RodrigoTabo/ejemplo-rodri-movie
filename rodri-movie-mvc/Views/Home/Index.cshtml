@@ -1,7 +1,11 @@
 ﻿@model List<Pelicula>
 
+<!-- Pagination -->
 @{
-    ViewData["Title"] = "Home Page";
+    var paginaActual = ViewBag.PaginaActual as int? ?? 1;
+    var pageSize = ViewBag.PageSize as int? ?? 8;
+    var totalPages = ViewBag.TotalPages as int? ?? 1;
+    var busqueda = ViewBag.TxtBusqueda as string ?? "";
 }
 
 <style>
@@ -65,9 +69,36 @@
     }
 </style>
 
-
 <div class="container my-5">
     <h2 class="text-center fw-bold mb-5">Cartelera</h2>
+
+    <div class="container my-5">
+        <form method="get" class="row g-3 align-items-end">
+            <!-- Buscador -->
+            <div class="col-md-4">
+                <label for="buscar" class="form-label">Buscar</label>
+                <input type="text" value="@busqueda" class="form-control" name="txtBusqueda" placeholder="Buscar pelicula...">
+            </div>
+
+            <!-- Género -->
+            <div class="col-md-3">
+                <label for="genero" class="form-label">Género</label>
+                <select class="form-select" asp-items="ViewBag.GeneroId"></select>
+            </div>
+
+            <!-- Plataforma -->
+            <div class="col-md-3">
+                <label for="plataforma" class="form-label">Plataforma</label>
+                <select class="form-select" asp-items="ViewBag.PlataformaId"></select>
+            </div>
+
+            <!-- Botón -->
+            <div class="col-md-2 d-grid">
+                <button type="submit" class="btn btn-primary">Filtrar</button>
+            </div>
+        </form>
+    </div>
+
 
     <div class="row g-4">
 
@@ -89,7 +120,7 @@
                         <h5 class="card-title text-center fw-semibold mb-2">@pelicula.Titulo</h5>
 
                         <div class="text-center mb-3">
-                                <span class="text-warning fs-5">@pelicula.PromedioRating</span>
+                            <span class="text-warning fs-5">@pelicula.PromedioRating</span>
                         </div>
 
                         <div class="mt-auto text-center">
@@ -101,31 +132,27 @@
         }
 
     </div>
-    
+
 </div>
 
-<!-- Pagination -->
-@{
-    var page = ViewBag.Page as int? ?? 1;
-    var pageSize = ViewBag.PageSize as int? ?? 8;
-    var totalPages = ViewBag.TotalPages as int? ?? 1;
-}
 
 @if (totalPages > 1)
 {
     <nav aria-label="Paginación" class="mt-4">
         <ul class="pagination justify-content-center">
-            <li class="page-item @(page <= 1 ? "disabled" : "")">
-                <a class="page-link" href="?page=@(page - 1)&pageSize=@pageSize">Anterior</a>
+            <li class="page-item @(paginaActual <= 1 ? "disabled" : "")">
+                <a asp-action="Index" asp-route-txtBusqueda="@busqueda" asp-route-paginaActual="@(paginaActual - 1)" class="page-link"> Anterior</a>
             </li>
 
             @for (int i = 1; i <= totalPages; i++)
             {
-                <li class="page-item @(i == page ? "active" : "")"><a class="page-link" href="?page=@i&pageSize=@pageSize">@i</a></li>
+                <li class="page-item @(i == paginaActual ? "active" : "")">
+                    <a asp-action="Index" asp-route-paginaActual="@i" asp-route-txtBusqueda="@busqueda" class="page-link">@i</a>
+                </li>
             }
 
-            <li class="page-item @(page >= totalPages ? "disabled" : "")">
-                <a class="page-link" href="?page=@(page + 1)&pageSize=@pageSize">Siguiente</a>
+            <li class="page-item @(paginaActual >= totalPages ? "disabled" : "")">
+                <a asp-action="Index" asp-route-txtBusqueda="@busqueda" asp-route-paginaActual="@(paginaActual + 1)" class="page-link"> Siguiente</a>
             </li>
         </ul>
     </nav>

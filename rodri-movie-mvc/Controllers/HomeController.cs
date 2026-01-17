@@ -1,8 +1,9 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using rodri_movie_mvc.Data;
 using rodri_movie_mvc.Models;
+using System.Diagnostics;
 
 namespace rodri_movie_mvc.Controllers
 {
@@ -15,26 +16,37 @@ namespace rodri_movie_mvc.Controllers
         {
                 _context = context;
         }
-        public async Task<IActionResult> Index(int page = 1, int pageSize = 8)
+        public async Task<IActionResult> Index(int paginaActual = 1, int pageSize = 8, string txtBusqueda = "") 
         {
-            if (page < 1) page = 1;
+            if (paginaActual < 1) paginaActual = 1;
             if (pageSize != 8) pageSize = 8;
 
-            var totalItems = await _context.Peliculas.CountAsync();
+
+            var consulta = _context.Peliculas.AsQueryable();
+            if (!string.IsNullOrEmpty(txtBusqueda))
+            {
+                consulta = consulta.Where(p => p.Titulo.Contains(txtBusqueda));
+            }
+
+
+
+
+            var totalItems = await consulta.CountAsync();
             var totalPages = (int)System.Math.Ceiling(totalItems / (double)pageSize);
 
-            if (page > totalPages && totalPages > 0) page = totalPages;
+            if (paginaActual > totalPages && totalPages > 0) paginaActual = totalPages;
 
-            var peliculas = await _context.Peliculas
+            var peliculas = await consulta
                 .OrderBy(p => p.Titulo)
-                .Skip((page - 1) * pageSize)
+                .Skip((paginaActual - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
 
-            ViewBag.Page = page;
+            ViewBag.PaginaActual = paginaActual;
             ViewBag.PageSize = pageSize;
             ViewBag.TotalPages = totalPages;
             ViewBag.TotalItems = totalItems;
+            ViewBag.TxtBusqueda = txtBusqueda;
 
             return View(peliculas);
         }
