@@ -17,6 +17,30 @@ html {
   min-height: 100%;
 }
 
+/* Dark mode using Bootstrap 5 data-bs-theme attribute on html */
+html[data-bs-theme="dark"], html[data-bs-theme="dark"] body {
+  background-color: #121212;
+  color: #e6e6e6;
+}
+
+html[data-bs-theme="dark"] .navbar, html[data-bs-theme="dark"] .footer {
+  background-color: #1f1f1f !important;
+}
+
+html[data-bs-theme="dark"] .nav-link, html[data-bs-theme="dark"] .navbar-brand, html[data-bs-theme="dark"] .footer {
+  color: #e6e6e6 !important;
+}
+
+html[data-bs-theme="dark"] .table {
+  color: #e6e6e6;
+  background-color: #1b1b1b;
+}
+
+html[data-bs-theme="dark"] .btn-outline-secondary {
+  color: #e6e6e6;
+  border-color: #555;
+}
+
 body {
   margin-bottom: 60px;
 }

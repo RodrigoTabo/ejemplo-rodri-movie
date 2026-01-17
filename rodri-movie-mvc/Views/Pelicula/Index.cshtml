@@ -13,8 +13,8 @@
             <p>
                 <a class="btn btn-primary" asp-action="Create">Añadir Pelicula</a>
             </p>
-            <table class="table">
-                <thead>
+            <table id="peliculasTable" class="table display" style="width:100%; visibility:hidden;">
+                    <thead>
                     <tr>
                         <th>
                             @Html.DisplayNameFor(model => model.Titulo)
@@ -59,4 +59,31 @@
 
         </div>
     </div>
+
+@section Scripts {
+    <!-- jQuery (necesario para DataTables) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-3gJwYp8qY2J3o2h7gY6k2mZb3Y1b4qYp4+6qvC5R5E8=" crossorigin="anonymous"></script>
+
+    <!-- DataTables CSS/JS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#peliculasTable').DataTable({
+                responsive: true,
+                // Valor inicial y opciones del selector de filas por página
+                pageLength: 5,
+                lengthMenu: [[5, 10, 15, 20], [5, 10, 15, 20]],
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
+                },
+                // Mostrar la tabla solo cuando DataTables haya terminado la inicialización
+                initComplete: function () {
+                    $('#peliculasTable').css('visibility', 'visible');
+                }
+            });
+        });
+    </script>
+}
 

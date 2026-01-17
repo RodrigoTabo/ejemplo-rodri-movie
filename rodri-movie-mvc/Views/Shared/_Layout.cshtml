@@ -3,6 +3,15 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Aplicar tema (data-bs-theme) antes del render para evitar parpadeo -->
+    <script>
+        (function () {
+            try {
+                var theme = localStorage.getItem('theme');
+                if (theme === 'dark') document.documentElement.setAttribute('data-bs-theme', 'dark');
+            } catch (e) { }
+        })();
+    </script>
     <title>@ViewData["Title"] - rodri_movie_mvc</title>
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -33,6 +42,9 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Plataforma" asp-action="Index">Plataformas</a>
                         </li>
                     </ul>
+                    <div class="d-flex align-items-center ms-2">
+                        <button id="themeToggle" class="btn btn-sm btn-outline-secondary" type="button" title="Cambiar tema">🌙</button>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -51,6 +63,28 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var btn = document.getElementById('themeToggle');
+            if (!btn) return;
+            // Ajustar icono inicial
+            var stored = localStorage.getItem('theme');
+            if (stored === 'dark') btn.textContent = '☀️';
+
+            btn.addEventListener('click', function () {
+                var current = document.documentElement.getAttribute('data-bs-theme');
+                if (current === 'dark') {
+                    document.documentElement.removeAttribute('data-bs-theme');
+                    localStorage.setItem('theme', 'light');
+                    btn.textContent = '🌙';
+                } else {
+                    document.documentElement.setAttribute('data-bs-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                    btn.textContent = '☀️';
+                }
+            });
+        });
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
