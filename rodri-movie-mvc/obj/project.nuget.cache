@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "kulrmrA40t4=",
+  "dgSpecHash": "HBAHNxzrmSs=",
   "success": true,
   "projectFilePath": "C:\\Users\\Rodrii\\Desktop\\Curso Universitario Maxi Programas\\Curso C# Nivel 4\\06 - Desarrollo app con IA\\rodri-movie-mvc\\rodri-movie-mvc.csproj",
   "expectedPackageFiles": [
@@ -114,6 +114,7 @@
     "C:\\Users\\Rodrii\\.nuget\\packages\\nuget.projectmodel\\6.12.1\\nuget.projectmodel.6.12.1.nupkg.sha512",
     "C:\\Users\\Rodrii\\.nuget\\packages\\nuget.protocol\\6.12.1\\nuget.protocol.6.12.1.nupkg.sha512",
     "C:\\Users\\Rodrii\\.nuget\\packages\\nuget.versioning\\6.12.1\\nuget.versioning.6.12.1.nupkg.sha512",
+    "C:\\Users\\Rodrii\\.nuget\\packages\\sixlabors.imagesharp\\3.1.12\\sixlabors.imagesharp.3.1.12.nupkg.sha512",
     "C:\\Users\\Rodrii\\.nuget\\packages\\system.clientmodel\\1.5.1\\system.clientmodel.1.5.1.nupkg.sha512",
     "C:\\Users\\Rodrii\\.nuget\\packages\\system.codedom\\6.0.0\\system.codedom.6.0.0.nupkg.sha512",
     "C:\\Users\\Rodrii\\.nuget\\packages\\system.composition\\9.0.0\\system.composition.9.0.0.nupkg.sha512",

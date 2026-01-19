@@ -23,18 +23,23 @@
         vertical-align: middle;
         font-size: 20px;
     }
+
+    #ImagenPerfil {
+        display: none;
+    }
 </style>
 
 <div class="container d-flex flex-column align-items-center p-4">
     <div class="card profile-card shadow-sm border">
         <div class="card-body p-4 p-md-5">
-            <div class="text-center mb-4">
-                <div class="profile-image-container mb-3">
-                    <img alt="Imagen de perfil" class="rounded-circle border border-4 border-light shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIZq9yQ9aQ2vFQeW545-hcJ8CKj_afLvUCt3q_cUMrjlIz2q4NmX9lIp8G-Ly09mtTvYYVSH2Qq0wtMPnD03Qkvvb8ChZFqZwvnYZniet6uoFR77L46C6bTz4NnvbQc5jt6z67u8Jj604yymH9os1KilZZn46TRtfc7BBqw02AjcjNq-kQjVpTBImlddfJj97yPZJkQsO20iG3IVUv3XNuzvh7FlvXwoD-UGVGZMh67YD2rp8HRBoe-sdI8ZZw-D95zoYRK7lFdifw" />
+            <form method="post" enctype="multipart/form-data">
+                <div class="text-center mb-4">
+                    <div class="profile-image-container mb-3">
+                        <img alt="Imagen de perfil" id="profileImage" class="rounded-circle border border-4 border-light shadow-sm" src="@Model.ImagenUrlPerfil" />
+                    </div>
+                    <a type="button" class="text-decoration-none small fw-medium" onclick="document.getElementById('ImagenPerfil').click()">Cambiar Foto</a>
+                    <input type="file" asp-for="ImagenPerfil" accept="image/png,image/jpeg,image/webp" class="form-control" onchange="previewImage(this)" />
                 </div>
-                <a class="text-decoration-none small fw-medium" href="#">Cambiar Foto</a>
-            </div>
-            <form method="post">
                 <div class="mb-3">
                     <label class="form-label" for="Nombre">Nombre</label>
                     <input asp-for="Nombre" class="form-control" placeholder="Rodrigo" />
@@ -51,13 +56,25 @@
                     Guardar Cambios
                 </button>
             </form>
-        @if (ViewBag.Mensaje != null)
-        {
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                @ViewBag.Mensaje
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        }
+            @if (ViewBag.Mensaje != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    @ViewBag.Mensaje
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
         </div>
     </div>
 </div>
+
+<script>
+    function previewImage(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('profileImage').src = e.target.result;
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>

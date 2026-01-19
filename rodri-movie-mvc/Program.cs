@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using rodri_movie_mvc.Data;
 using rodri_movie_mvc.Models;
+using rodri_movie_mvc.Service;
+using Microsoft.AspNetCore.Http.Features;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,6 +48,10 @@ builder.Services.ConfigureApplicationCookie (options =>
         options.AccessDeniedPath = "/Usuario/AccessDenied";
         // Se pueden ajustar otras opciones de cookie aquí
     });
+
+
+builder.Services.AddScoped<ImagenStorage>();
+builder.Services.Configure<FormOptions>(o => { o.MultipartBoundaryLengthLimit = 2 * 1024 * 1024; });
 
 var app = builder.Build();
 

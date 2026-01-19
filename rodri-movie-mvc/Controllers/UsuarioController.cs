@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using rodri_movie_mvc.Models;
+using rodri_movie_mvc.Service;
 using rodri_movie_mvc.ViewModels;
 using System.Threading.Tasks;
 
@@ -13,11 +14,13 @@ namespace rodri_movie_mvc.Controllers
 
         private readonly UserManager<Usuario> _userManager;
         private readonly SignInManager<Usuario> _signInManager;
+        private readonly ImagenStorage _imagenStorage;
 
-        public UsuarioController(UserManager<Usuario> userManager, SignInManager<Usuario> signInManager)
+        public UsuarioController(UserManager<Usuario> userManager, SignInManager<Usuario> signInManager, ImagenStorage imagenStorage)
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            _imagenStorage = imagenStorage;
         }
 
         public IActionResult Login()
@@ -115,6 +118,29 @@ namespace rodri_movie_mvc.Controllers
             if (ModelState.IsValid)
             {
                 var usuarioActual = await _userManager.GetUserAsync(User);
+
+
+                try
+                {
+                    if(MiPerfil.ImagenPerfil is not null && MiPerfil.ImagenPerfil.Length > 0)
+                    {
+                        //opcional; borrar la anterior si no es placeholder.
+                        if(!string .IsNullOrEmpty(usuarioActual.ImagenUrlPerfil))
+                            await _imagenStorage.DeleteAsync(usuarioActual.ImagenUrlPerfil);
+
+                        var nuevaRuta = await _imagenStorage.SaveAsync(usuarioActual.Id, MiPerfil.ImagenPerfil);
+                        usuarioActual.ImagenUrlPerfil = nuevaRuta;
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                    return View(MiPerfil);
+                }
+
+
+
                 usuarioActual.Nombre = MiPerfil.Nombre;
                 usuarioActual.Apellido = MiPerfil.Apellido;
 
