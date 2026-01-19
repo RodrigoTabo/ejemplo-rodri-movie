@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using rodri_movie_mvc.Data;
+using rodri_movie_mvc.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,42 @@ builder.Services.AddControllersWithViews();
 
 //incluir contexto
 builder.Services.AddDbContext<MovieDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("MovieDbContext")));
+
+//add identity core
+builder.Services.AddIdentityCore<Usuario>(options =>
+{
+    // Opciones de contraseña básicas
+    options.SignIn.RequireConfirmedAccount = false;
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequiredLength = 3;
+
+    // Opciones de usuario
+    options.User.RequireUniqueEmail = true;
+})
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<MovieDbContext>()
+    .AddSignInManager();
+
+//Manejo de la cookie. Lo ponemos en default, pero hay que ponerlo.
+builder.Services.AddAuthentication(opt =>
+{
+    opt.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
+})
+.AddIdentityCookies();
+
+
+// Registrar autenticación por cookie para el esquema de Identity
+builder.Services.ConfigureApplicationCookie (options =>
+    {
+        options.ExpireTimeSpan = TimeSpan.FromHours(1);
+        options.SlidingExpiration = true;
+        options.LoginPath = "/Usuario/Login";
+        options.AccessDeniedPath = "/Usuario/AccessDenied";
+        // Se pueden ajustar otras opciones de cookie aquí
+    });
 
 var app = builder.Build();
 
@@ -28,9 +65,6 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-
-
-
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -42,6 +76,8 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
+// Autenticación debe ir antes de autorización
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();
@@ -50,6 +86,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
-
 
 app.Run();
