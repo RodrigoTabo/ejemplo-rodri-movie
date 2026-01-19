@@ -80,9 +80,10 @@ namespace rodri_movie_mvc.Controllers
 
             return View(usuario);
         }
-        public IActionResult Logot()
+        public IActionResult Logout()
         {
-            return View();
+            _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
         public IActionResult AccessDenied()
         {
