@@ -72,6 +72,8 @@ namespace rodri_movie_mvc.Controllers
             var pelicula = await _context.Peliculas
                 .Include(g => g.Genero)
                 .Include(p => p.Plataforma)
+                .Include(p => p.ListaReviews)
+                .ThenInclude(r => r.Usuario)
                 .FirstOrDefaultAsync(p => p.Id == Id);
             return View(pelicula);
         }
