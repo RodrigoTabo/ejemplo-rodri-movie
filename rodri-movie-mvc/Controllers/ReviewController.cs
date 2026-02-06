@@ -130,7 +130,7 @@ namespace rodri_movie_mvc.Controllers
                         return NotFound();
 
                     var user = await _userManager.GetUserAsync(User);
-                    if (reviewExistente.UsuarioId != user.Id)
+                    if (review.UsuarioId != user.Id && !_userManager.IsInRoleAsync(user, "Admin").Result)
                         return Forbid();
 
                     reviewExistente.Rating = review.Rating;
